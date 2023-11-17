@@ -1,16 +1,7 @@
 package pt.pa;
 
-import pt.pa.graph.Edge;
-import pt.pa.graph.GraphLinked;
-import pt.pa.graph.Vertex;
-import pt.pa.model.UniversityNetwork;
 import pt.pa.model.Person;
-
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.Set;
+import pt.pa.model.UniversityNetwork;
 
 /**
  *
@@ -59,5 +50,12 @@ public class Main {
         universityNetwork.addClassRelationship("PA", docente1.getId(), student3.getId());
 
 
+        System.out.println(universityNetwork.toStringTeachersStudent());
+        System.out.println(universityNetwork.getNumberOfStudents(31));
+        System.out.println(universityNetwork.getMostPopularPerson().getName());
+
+        // Remove one Relationship
+        universityNetwork.removeRelationships(docente2.getId(), student6.getId());
+        System.out.println(universityNetwork.toStringTeachersStudent());
     }
 }

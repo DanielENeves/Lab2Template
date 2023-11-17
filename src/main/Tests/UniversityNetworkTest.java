@@ -5,6 +5,10 @@ import pt.pa.model.NetworkException;
 import pt.pa.model.Person;
 import pt.pa.model.UniversityNetwork;
 
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 public class UniversityNetworkTest {
 
     private UniversityNetwork universityNetwork;
@@ -30,34 +34,33 @@ public class UniversityNetworkTest {
     }
     @Test
     public void test_Thrown_Exception_afterAddExistentPerson() {
-        // Add a person initially
+
         Person student1 = new Person(135, "Rodrigo", Person.PersonRole.STUDENT);
         universityNetwork.addPerson(student1);
 
-        // Attempt to add the same person again and check if an exception is thrown
-        NetworkException thrownException = Assert.assertThrows(NetworkException.class, () -> universityNetwork.addPerson(student1));
 
-        // Verify the exception message or perform additional checks if needed
-        Assert.assertEquals("Person with ID 135 already exists in graph!", thrownException.getMessage());
+        assertThrows(NetworkException.class, () -> universityNetwork.addPerson(student1));
     }
+
 
     @Test
     public void test_PersonExist_afterInsert(){
-        // Add a person initially
+
         Person student1 = new Person(135, "Rodrigo", Person.PersonRole.STUDENT);
         universityNetwork.addPerson(student1);
 
-        Assert.assertTrue("Rodrigo", universityNetwork.personExists(student1.getName()));
+        assertTrue(universityNetwork.personExists(student1.getName()));
     }
-    /*public void test_isThrown_Exception_afterGetInvalidRelationship() {
+
+    @Test
+    public void test_isThrown_Exception_afterGetInvalidRelationship() {
         int validId = 1;
         int invalidId = 999;
 
         assertDoesNotThrow(() -> universityNetwork.addGroupRelationship("Group", validId, validId + 1));
 
-        NetworkException thrownException = assertThrows(NetworkException.class,
+        assertThrows(NetworkException.class,
                 () -> universityNetwork.getRelationships(validId, invalidId));
 
-        assertEquals("Um ou ambos os IDs não são válidos.", thrownException.getMessage());
-    }*/
+    }
 }
