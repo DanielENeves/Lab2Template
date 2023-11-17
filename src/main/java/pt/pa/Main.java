@@ -58,6 +58,6 @@ public class Main {
         universityNetwork.addClassRelationship("PA", docente1.getId(), student7.getId());
         universityNetwork.addClassRelationship("PA", docente1.getId(), student3.getId());
 
-        
+
     }
 }

@@ -29,7 +29,7 @@ public class UniversityNetwork {
 
     public void addPerson(Person p) throws NetworkException{
         if(findPerson(p.getId()) != null){
-            throw new NetworkException("Person with ID"+ p.getId()+"already exists in graph!");
+            throw new NetworkException("Person with ID "+ p.getId()+" already exists in graph!");
         }
         network.insertVertex(p);
     }
@@ -66,5 +66,13 @@ public class UniversityNetwork {
         network.insertEdge(teacher, student, classRelationship);
     }
 
+    public boolean personExists(String name){
+        for (Vertex<Person> v : network.vertices()) {
+            if (v.element().getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
