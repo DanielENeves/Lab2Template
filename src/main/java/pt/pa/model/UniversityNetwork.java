@@ -27,6 +27,44 @@ public class UniversityNetwork {
         return null;
     }
 
+    public void addPerson(Person p) throws NetworkException{
+        if(findPerson(p.getId()) != null){
+            throw new NetworkException("Person with ID"+ p.getId()+"already exists in graph!");
+        }
+        network.insertVertex(p);
+    }
+
+    public void addGroupRelationship(String description, int idStudent1, int idStudent2) throws NetworkException{
+        Vertex<Person> student1 = findPerson(idStudent1);
+        Vertex<Person> student2 = findPerson(idStudent2);
+
+        if(student1 == null || student2 == null){
+            throw new NetworkException("One or both students do not exist!");
+        }
+
+        if(!student1.element().isRole(Person.PersonRole.STUDENT) || !student2.element().isRole(Person.PersonRole.STUDENT)){
+            throw new NetworkException("One or both Ids do not refer to a student!");
+        }
+
+        Relationship groupRelationship = new Relationship(description, Relationship.RelRole.GROUP);
+        network.insertEdge(student1, student2, groupRelationship);
+    }
+
+    public void addClassRelationship(String description, int idTeacher, int idStudent) throws NetworkException{
+        Vertex<Person> teacher = findPerson(idTeacher);
+        Vertex<Person> student = findPerson(idStudent);
+
+        if(teacher == null || student == null){
+            throw new NetworkException("The teacher or the student do not exist!");
+        }
+
+        if(teacher.element().getRole() != Person.PersonRole.TEACHER || student.element().getRole() != Person.PersonRole.STUDENT){
+            throw new NetworkException("One or both IDs do not refer a Person!");
+        }
+
+        Relationship classRelationship = new Relationship(description, Relationship.RelRole.CLASS);
+        network.insertEdge(teacher, student, classRelationship);
+    }
 
 
 }
